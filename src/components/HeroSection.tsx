@@ -1,6 +1,6 @@
-import { useRef, useMemo } from "react";
+import { useRef, useMemo, Suspense, useState, useEffect } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { Float, Text3D, OrbitControls } from "@react-three/drei";
+import { Float, OrbitControls } from "@react-three/drei";
 import { motion } from "framer-motion";
 import * as THREE from "three";
 
@@ -64,20 +64,68 @@ const ParticleField = () => {
   );
 };
 
+const Scene3D = () => {
+  return (
+    <Canvas camera={{ position: [0, 0, 5], fov: 75 }}>
+      <ambientLight intensity={0.5} />
+      <pointLight position={[10, 10, 10]} color="#00ffff" intensity={1} />
+      <pointLight position={[-10, -10, -10]} color="#ff00ff" intensity={0.5} />
+      <AnimatedCube />
+      <ParticleField />
+      <OrbitControls enableZoom={false} enablePan={false} autoRotate autoRotateSpeed={0.5} />
+    </Canvas>
+  );
+};
+
 export const HeroSection = () => {
+  const [webglSupported, setWebglSupported] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // Check WebGL support
+    const canvas = document.createElement('canvas');
+    const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+    setWebglSupported(!!gl);
+    setIsLoading(false);
+    
+    console.log('WebGL supported:', !!gl);
+  }, []);
+
+  const FallbackBackground = () => (
+    <div className="absolute inset-0 z-0">
+      {/* CSS-only animated background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-background via-card to-background opacity-50"></div>
+      <div className="absolute inset-0">
+        {Array.from({ length: 50 }).map((_, i) => (
+          <div
+            key={i}
+            className="absolute w-1 h-1 bg-neon-cyan rounded-full animate-pulse"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              animationDelay: `${Math.random() * 3}s`,
+              animationDuration: `${2 + Math.random() * 2}s`,
+            }}
+          />
+        ))}
+      </div>
+    </div>
+  );
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* 3D Canvas Background */}
-      <div className="absolute inset-0 z-0">
-        <Canvas camera={{ position: [0, 0, 5], fov: 75 }}>
-          <ambientLight intensity={0.5} />
-          <pointLight position={[10, 10, 10]} color="#00ffff" intensity={1} />
-          <pointLight position={[-10, -10, -10]} color="#ff00ff" intensity={0.5} />
-          <AnimatedCube />
-          <ParticleField />
-          <OrbitControls enableZoom={false} enablePan={false} autoRotate autoRotateSpeed={0.5} />
-        </Canvas>
-      </div>
+      {/* Background with WebGL fallback */}
+      {!isLoading && (
+        webglSupported ? (
+          <div className="absolute inset-0 z-0">
+            <Suspense fallback={<FallbackBackground />}>
+              <Scene3D />
+            </Suspense>
+          </div>
+        ) : (
+          <FallbackBackground />
+        )
+      )}
 
       {/* Matrix Rain Effect */}
       <div className="matrix-rain absolute inset-0 z-1">

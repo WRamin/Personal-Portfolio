@@ -168,20 +168,20 @@ All colors MUST be HSL.
 }
 
 @layer utilities {
-  .text-neon-cyan { color: hsl(var(--neon-cyan)); }
-  .text-neon-blue { color: hsl(var(--neon-blue)); }
-  .text-neon-purple { color: hsl(var(--neon-purple)); }
-  .text-neon-pink { color: hsl(var(--neon-pink)); }
-  .text-matrix-green { color: hsl(var(--matrix-green)); }
+  .text-neon-cyan { color: hsl(180 100% 50%); }
+  .text-neon-blue { color: hsl(210 100% 50%); }
+  .text-neon-purple { color: hsl(280 100% 70%); }
+  .text-neon-pink { color: hsl(320 100% 60%); }
+  .text-matrix-green { color: hsl(120 100% 50%); }
   
-  .bg-gradient-primary { background: var(--gradient-primary); }
-  .bg-gradient-secondary { background: var(--gradient-secondary); }
-  .bg-gradient-accent { background: var(--gradient-accent); }
+  .bg-gradient-primary { background: linear-gradient(135deg, hsl(195 100% 50%), hsl(280 100% 70%)); }
+  .bg-gradient-secondary { background: linear-gradient(45deg, hsl(320 100% 60%), hsl(195 100% 50%)); }
+  .bg-gradient-accent { background: linear-gradient(90deg, hsl(180 100% 50%), hsl(210 100% 50%)); }
   
-  .shadow-neon-cyan { box-shadow: var(--glow-cyan); }
-  .shadow-neon-purple { box-shadow: var(--glow-purple); }
-  .shadow-neon-pink { box-shadow: var(--glow-pink); }
+  .shadow-neon-cyan { box-shadow: 0 0 20px hsl(180 100% 50% / 0.5); }
+  .shadow-neon-purple { box-shadow: 0 0 20px hsl(280 100% 70% / 0.5); }
+  .shadow-neon-pink { box-shadow: 0 0 20px hsl(320 100% 60% / 0.5); }
   
-  .transition-smooth { transition: var(--transition-smooth); }
-  .transition-bounce { transition: var(--transition-bounce); }
+  .transition-smooth { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+  .transition-bounce { transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55); }
 }
