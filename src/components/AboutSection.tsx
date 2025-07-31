@@ -2,33 +2,22 @@ import { motion } from "framer-motion";
 import aboutBackground from "@/assets/about-background.jpg";
 
 const skills = [
-  { name: "JavaScript/TypeScript", level: 95 },
-  { name: "React/Next.js", level: 90 },
-  { name: "Node.js/Express", level: 85 },
-  { name: "Python", level: 80 },
-  { name: "AWS/Cloud", level: 85 },
-  { name: "Database Design", level: 88 },
+  "JavaScript/TypeScript",
+  "React/Next.js", 
+  "Node.js/Express",
+  "Python",
+  "AWS/Cloud",
+  "Database Design",
 ];
 
-const SkillBar = ({ skill, index }: { skill: { name: string; level: number }; index: number }) => (
+const SkillTag = ({ skill, index }: { skill: string; index: number }) => (
   <motion.div
-    initial={{ opacity: 0, x: -50 }}
-    whileInView={{ opacity: 1, x: 0 }}
-    transition={{ duration: 0.6, delay: index * 0.1 }}
-    className="mb-4"
+    initial={{ opacity: 0, scale: 0.8 }}
+    whileInView={{ opacity: 1, scale: 1 }}
+    transition={{ duration: 0.3, delay: index * 0.1 }}
+    className="px-4 py-2 text-sm bg-gradient-secondary text-background rounded-full font-mono border border-border/20 hover:shadow-neon-cyan transition-all duration-300"
   >
-    <div className="flex justify-between mb-2">
-      <span className="text-foreground font-mono">{skill.name}</span>
-      <span className="text-neon-cyan font-mono">{skill.level}%</span>
-    </div>
-    <div className="w-full bg-muted rounded-full h-2 overflow-hidden">
-      <motion.div
-        initial={{ width: 0 }}
-        whileInView={{ width: `${skill.level}%` }}
-        transition={{ duration: 1, delay: index * 0.1 + 0.3 }}
-        className="h-full bg-gradient-primary rounded-full shadow-neon-cyan"
-      />
-    </div>
+    {skill}
   </motion.div>
 );
 
@@ -105,9 +94,9 @@ export const AboutSection = () => {
               <h3 className="text-2xl font-bold mb-6 text-neon-cyan font-mono">
                 &gt; skills.map()
               </h3>
-              <div className="space-y-4">
+              <div className="flex flex-wrap gap-3">
                 {skills.map((skill, index) => (
-                  <SkillBar key={skill.name} skill={skill} index={index} />
+                  <SkillTag key={skill} skill={skill} index={index} />
                 ))}
               </div>
             </div>
