@@ -152,8 +152,8 @@ export const HeroSection = () => {
           transition={{ duration: 1, delay: 0.2 }}
         >
           <h1 className="text-6xl md:text-8xl font-bold mb-6 glitch-text">
-            <span className="bg-gradient-primary bg-clip-text text-transparent">
-              DEVELOPER
+            <span className="bg-gradient-primary bg-clip-text ">
+              Ramin Wafa
             </span>
           </h1>
         </motion.div>
@@ -168,7 +168,7 @@ export const HeroSection = () => {
           </p>
           <p className="text-lg text-muted-foreground mb-12 max-w-2xl mx-auto">
             Crafting digital experiences with cutting-edge technology and innovative solutions. 
-            Specializing in modern web development and system architecture.
+            Specializing in modern application development.
           </p>
         </motion.div>
 
@@ -178,10 +178,20 @@ export const HeroSection = () => {
           transition={{ duration: 0.8, delay: 0.8 }}
           className="flex flex-col sm:flex-row gap-4 justify-center"
         >
-          <button className="px-8 py-4 bg-gradient-primary text-background font-bold rounded-lg shadow-neon-cyan hover:shadow-neon-purple transition-all duration-300 transform hover:scale-105">
+          <button 
+          onClick={() => {
+            const contactSection = document.getElementById('projects');
+            contactSection?.scrollIntoView({ behavior: 'smooth' });
+          }} 
+          className="px-8 py-4 bg-gradient-primary text-background font-bold rounded-lg shadow-neon-cyan hover:shadow-neon-purple transition-all duration-300 transform hover:scale-105">
             View Projects
           </button>
-          <button className="px-8 py-4 border-2 border-primary text-primary font-bold rounded-lg hover:bg-primary hover:text-background transition-all duration-300 transform hover:scale-105">
+          <button 
+          onClick={() => {
+            const contactSection = document.getElementById('contact');
+            contactSection?.scrollIntoView({ behavior: 'smooth' });
+          }} 
+          className="px-8 py-4 border-2 border-primary text-primary font-bold rounded-lg hover:bg-primary hover:text-background transition-all duration-300 transform hover:scale-105">
             Contact Me
           </button>
         </motion.div>

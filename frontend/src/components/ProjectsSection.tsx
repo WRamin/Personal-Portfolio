@@ -4,14 +4,16 @@ import { useState } from "react";
 const projects = [
   {
     id: 1,
-    title: "AI-Powered Analytics Dashboard",
-    description: "Real-time data visualization platform with machine learning insights, processing millions of data points daily.",
-    technologies: ["React", "TypeScript", "Python", "TensorFlow", "AWS"],
+    title: "AI-Powered Job Application Tracker",
+    description: "Real-time application to streamline and organize job applications with intelligent tracking and progress visualization.",
+    technologies: ["React", "Node.js", "Supabase", "OpenAI API"],
     category: "Full-Stack",
-    status: "Live",
-    features: ["Real-time data processing", "ML predictions", "Interactive charts", "API integration"]
+    status: "In Progress",
+    features: ["Real-time data processing", "AI predictions", "Interactive charts", "API integration"],
+    liveUrl: null, // still in progress not hosted yet
+    codeUrl: "https://github.com/WRamin/Ai-Job-Tracker"
   },
-  {
+  /*{
     id: 2,
     title: "Microservices E-commerce Platform",
     description: "Scalable e-commerce solution built with microservices architecture, handling high-traffic loads.",
@@ -19,47 +21,61 @@ const projects = [
     category: "Backend",
     status: "Development",
     features: ["Microservices architecture", "Payment integration", "Inventory management", "Order tracking"]
+  }, */
+  {
+    id: 2,
+    title: "Beat The Computer",
+    description: "Simple application game, play as yourself against the computer",
+    technologies: ["JavaScript", "HTML", "CSS"],
+    category: "Backend",
+    status: "Live",
+    features: ["Real-time results"],
+    liveUrl: "https://number-guess-g.netlify.app/",
+    codeUrl: "https://github.com/WRamin/numberguesser"
+
   },
   {
     id: 3,
-    title: "Blockchain Voting System",
-    description: "Secure, transparent voting application using blockchain technology for immutable vote recording.",
-    technologies: ["Solidity", "Web3.js", "React", "Ethereum", "IPFS"],
-    category: "Blockchain",
+    title: "My Meterologist",
+    description: "responsive weather application delivering real-time weather data with 99% accuracy based on user location, using third-party APIs for fast data retrieval and robust error handling.",
+    technologies: ["React", "JavaScript", "API"],
+    category: "Full-Stack",
     status: "Live",
-    features: ["Smart contracts", "Decentralized storage", "Vote verification", "Real-time results"]
+    features: ["Live weather"],
+    liveUrl: "https://my-meterologist.netlify.app/",
+    codeUrl: "https://github.com/WRamin/Weather-App"
   },
   {
     id: 4,
-    title: "Real-time Collaboration Tool",
-    description: "Team collaboration platform with live document editing, video calls, and project management features.",
-    technologies: ["React", "Socket.io", "Node.js", "WebRTC", "PostgreSQL"],
+    title: "My Notes",
+    description: "A Task planner in React with dynamic task creation, deletion, and completion tracking.",
+    technologies: ["JavaScript", "React"],
     category: "Full-Stack",
     status: "Live",
-    features: ["Live editing", "Video conferencing", "File sharing", "Task management"]
-  },
-  {
-    id: 5,
-    title: "IoT Environmental Monitor",
-    description: "Smart environmental monitoring system with sensor networks and predictive analytics for climate control.",
-    technologies: ["Python", "Raspberry Pi", "MQTT", "InfluxDB", "Grafana"],
-    category: "IoT",
-    status: "Live",
-    features: ["Sensor integration", "Data logging", "Alerts system", "Mobile app"]
-  },
-  {
-    id: 6,
-    title: "Neural Network Image Classifier",
-    description: "Deep learning model for medical image classification with 98% accuracy rate, deployed in production.",
-    technologies: ["Python", "TensorFlow", "OpenCV", "Flask", "Docker"],
-    category: "AI/ML",
-    status: "Research",
-    features: ["CNN architecture", "Data augmentation", "Model optimization", "API deployment"]
+    features: ["Add task", "Delete finished tasks", "Edit task"],
+    liveUrl: "https://my-taskman.netlify.app/",
+    codeUrl: "https://github.com/WRamin/todo-app"
   }
 ];
 
 const ProjectCard = ({ project, index }: { project: typeof projects[0]; index: number }) => {
   const [isHovered, setIsHovered] = useState(false);
+
+  const handleLiveClick = () => {
+    if (project.liveUrl) {
+      window.open(project.liveUrl, '_blank');
+    } else {
+      alert(`${project.title} is not yet live!`);
+    }
+  };
+
+  const handleCodeClick = () => {
+    if (project.codeUrl) {
+      window.open(project.codeUrl, '_blank');
+    } else {
+      alert(`Code repository not available for ${project.title}`);
+    }
+  };
 
   return (
     <motion.div
@@ -130,13 +146,19 @@ const ProjectCard = ({ project, index }: { project: typeof projects[0]; index: n
             </motion.span>
           ))}
         </div>
-
+  
         {/* Action Buttons */}
         <div className="flex gap-3 mt-auto">
-          <button className="flex-1 px-4 py-2 bg-gradient-primary text-background rounded-lg text-sm font-bold hover:shadow-neon-cyan transition-all duration-300 transform hover:scale-105">
+          <button 
+          onClick={handleLiveClick}
+          disabled={!project.liveUrl}
+          className="flex-1 px-4 py-2 bg-gradient-primary text-background rounded-lg text-sm font-bold hover:shadow-neon-cyan transition-all duration-300 transform hover:scale-105">
             View Live
           </button>
-          <button className="flex-1 px-4 py-2 border border-primary text-primary rounded-lg text-sm font-bold hover:bg-primary hover:text-background transition-all duration-300">
+          <button 
+          onClick={handleCodeClick}
+          disabled={!project.codeUrl}
+          className="flex-1 px-4 py-2 border border-primary text-primary rounded-lg text-sm font-bold hover:bg-primary hover:text-background transition-all duration-300">
             View Code
           </button>
         </div>
@@ -162,12 +184,12 @@ export const ProjectsSection = () => {
           transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-6xl font-bold mb-4 font-mono">
+          <h2 id="projects" className="text-4xl md:text-6xl font-bold mb-4 font-mono">
             <span className="text-neon-cyan">&gt;</span> PROJECTS
           </h2>
           <div className="w-20 h-1 bg-gradient-primary mx-auto mb-8"></div>
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
-            A showcase of my latest work and side projects. Each project represents hours of passion, 
+            A showcase of my latest work and side projects (completed and work in progess). Each project represents hours of passion, 
             problem-solving, and continuous learning in the ever-evolving world of technology.
           </p>
         </motion.div>

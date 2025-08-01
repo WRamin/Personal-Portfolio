@@ -5,31 +5,31 @@ const contactMethods = [
   {
     icon: "📧",
     label: "Email",
-    value: "dev@portfolio.com",
-    action: "mailto:dev@portfolio.com",
+    value: "ramin.w7@gmail.com",
+    action: "mailto:ramin.w7@gmail.com",
     description: "Drop me a line anytime"
   },
   {
     icon: "💼",
     label: "LinkedIn",
-    value: "linkedin.com/in/developer",
-    action: "https://linkedin.com/in/developer",
+    value: "linkedin.com/in/ramin-w",
+    action: "https://www.linkedin.com/in/ramin-wafa-0644742b3/",
     description: "Let's connect professionally"
   },
   {
     icon: "🐙",
     label: "GitHub",
-    value: "github.com/developer",
-    action: "https://github.com/developer",
+    value: "github.com/WRamin",
+    action: "https://github.com/WRamin",
     description: "Check out my code"
-  },
+  }/*,
   {
     icon: "🐦",
     label: "Twitter",
     value: "@developer",
     action: "https://twitter.com/developer",
     description: "Follow my tech journey"
-  }
+  } */
 ];
 
 const ContactMethod = ({ method, index }: { method: typeof contactMethods[0]; index: number }) => (
@@ -105,7 +105,7 @@ export const ContactSection = () => {
           transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-6xl font-bold mb-4 font-mono">
+          <h2 id="contact" className="text-4xl md:text-6xl font-bold mb-4 font-mono">
             <span className="text-neon-cyan">&gt;</span> CONTACT
           </h2>
           <div className="w-20 h-1 bg-gradient-primary mx-auto mb-8"></div>
@@ -213,7 +213,7 @@ export const ContactSection = () => {
                 &gt; connect_with_me()
               </h3>
               <p className="text-muted-foreground mb-8 leading-relaxed">
-                Choose your preferred way to get in touch. I typically respond within 24 hours 
+                Choose your preferred way to get in touch. I typically respond within 24 - 48 hours 
                 and I'm always excited to discuss new projects, opportunities, or just chat about tech!
               </p>
               
@@ -238,7 +238,7 @@ export const ContactSection = () => {
                 </h4>
               </div>
               <p className="text-sm text-muted-foreground">
-                Currently accepting new freelance projects and collaboration opportunities. 
+                Currently accepting new opportunities and collaboration. 
                 Remote work preferred, but open to discussing on-site arrangements.
               </p>
             </motion.div>
@@ -253,7 +253,7 @@ export const ContactSection = () => {
           className="text-center mt-16 pt-8 border-t border-border"
         >
           <p className="text-muted-foreground font-mono">
-            &copy; 2024 Developer Portfolio. Built with React + TypeScript + ❤️
+            &copy; 2025 Ramin's Portfolio. Built with React + TypeScript 
           </p>
           <p className="text-sm text-muted-foreground mt-2">
             "Code is like humor. When you have to explain it, it's bad." - Cory House

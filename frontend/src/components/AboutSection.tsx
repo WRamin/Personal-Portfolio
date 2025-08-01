@@ -8,6 +8,11 @@ const skills = [
   "Python",
   "AWS/Cloud",
   "Database Design",
+  "HTML/CSS",
+  "SQL",
+  "MongoDB",
+  "Git/GitHub",
+  "Docker/Kubernetes",
 ];
 
 const SkillTag = ({ skill, index }: { skill: string; index: number }) => (
@@ -59,13 +64,14 @@ export const AboutSection = () => {
                 console.log("Hello, World!");
               </h3>
               <p className="text-lg text-muted-foreground leading-relaxed mb-4">
-                I'm a passionate software engineer with 5+ years of experience building 
-                scalable web applications and distributed systems. I love turning complex 
-                problems into elegant, user-friendly solutions.
+              A dedicated sofware engineer with a relentless passion for coding and a knack 
+              for tackling new challenges. My world revolves are crafting elegant solutions to 
+              intricate problems, constantly pushing the boundaries of my knowledge to stay at 
+              the forefront of technology. I'm an avid gamer, immersing myself in virtual worlds 
+              that inspire creativity and strategic thinking. 
               </p>
               <p className="text-lg text-muted-foreground leading-relaxed mb-4">
-                When I'm not coding, you'll find me exploring new technologies, contributing 
-                to open-source projects, or diving deep into system architecture and performance optimization.
+                When I'm not coding, you'll find me exploring new technologies, Being active (sports/working out), or diving deep into system architecture and performance optimization.
               </p>
               <div className="flex flex-wrap gap-3 mt-6">
                 {["Full-Stack", "DevOps", "Cloud", "AI/ML"].map((tag, index) => (
@@ -109,9 +115,9 @@ export const AboutSection = () => {
               className="grid grid-cols-2 gap-4"
             >
               {[
-                { label: "Projects", value: "50+" },
-                { label: "Experience", value: "5+ Years" },
-                { label: "Technologies", value: "20+" },
+                { label: "Projects", value: "10+" },
+                { label: "Experience", value: "2+ Years" },
+                { label: "Technologies", value: "10+" },
                 { label: "Coffee Cups", value: "∞" },
               ].map((stat, index) => (
                 <div key={stat.label} className="text-center border border-border rounded-lg p-4 bg-card/30 backdrop-blur-sm hover:shadow-neon-cyan transition-all duration-300">
