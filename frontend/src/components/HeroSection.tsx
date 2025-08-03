@@ -34,8 +34,8 @@ const ParticleField = () => {
   const pointsRef = useRef<THREE.Points>(null);
   
   const particlesPosition = useMemo(() => {
-    const positions = new Float32Array(1000 * 3);
-    for (let i = 0; i < 1000; i++) {
+    const positions = new Float32Array(500 * 3);
+    for (let i = 0; i < 500; i++) {
       positions[i * 3] = (Math.random() - 0.5) * 10;
       positions[i * 3 + 1] = (Math.random() - 0.5) * 10;
       positions[i * 3 + 2] = (Math.random() - 0.5) * 10;
@@ -54,7 +54,7 @@ const ParticleField = () => {
       <bufferGeometry>
         <bufferAttribute
           attach="attributes-position"
-          count={1000}
+          count={500}
           array={particlesPosition}
           itemSize={3}
         />
@@ -93,22 +93,34 @@ export const HeroSection = () => {
 
   const FallbackBackground = () => (
     <div className="absolute inset-0 z-0">
-      {/* CSS-only animated background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-background via-card to-background opacity-50"></div>
+      {/* Enhanced CSS-only animated background */}
+      <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-accent/10 to-secondary/20"></div>
+      
+      {/* Simplified animated shapes */}
       <div className="absolute inset-0">
-        {Array.from({ length: 50 }).map((_, i) => (
+        <div className="absolute w-16 h-16 border-2 border-primary/30 transform rotate-45 animate-spin-slow" style={{ left: '20%', top: '30%' }} />
+        <div className="absolute w-12 h-12 border-2 border-accent/20 transform rotate-45 animate-spin-slow" style={{ left: '70%', top: '60%', animationDelay: '1s' }} />
+      </div>
+      
+      {/* Reduced particles */}
+      <div className="absolute inset-0">
+        {Array.from({ length: 8 }).map((_, i) => (
           <div
-            key={i}
-            className="absolute w-1 h-1 bg-neon-cyan rounded-full animate-pulse"
+            key={`particle-${i}`}
+            className="absolute w-2 h-2 bg-neon-cyan/60 rounded-full animate-pulse"
             style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 3}s`,
-              animationDuration: `${2 + Math.random() * 2}s`,
+              left: `${20 + i * 10}%`,
+              top: `${30 + (i % 3) * 20}%`,
+              animationDelay: `${i * 0.5}s`,
             }}
           />
         ))}
       </div>
+    
+      {/* Moving gradient overlay */}
+      <div 
+        className="absolute inset-0 bg-gradient-to-r from-transparent via-primary/5 to-transparent animate-slideX"
+      />
     </div>
   );
 
@@ -127,19 +139,19 @@ export const HeroSection = () => {
         )
       )}
 
-      {/* Matrix Rain Effect */}
+      {/* Simplified Matrix Rain Effect */}
       <div className="matrix-rain absolute inset-0 z-1">
-        {Array.from({ length: 20 }).map((_, i) => (
+        {Array.from({ length: 8 }).map((_, i) => (
           <div
             key={i}
             className="absolute text-matrix-green text-sm font-mono opacity-20"
             style={{
-              left: `${(i * 5) % 100}%`,
-              animationDelay: `${i * 0.5}s`,
-              animation: "matrix-fall 3s linear infinite",
+              left: `${i * 12}%`,
+              animationDelay: `${i * 0.8}s`,
+              animation: "matrix-fall 4s linear infinite",
             }}
           >
-            {Math.random().toString(36).substring(2, 8)}
+            010110
           </div>
         ))}
       </div>

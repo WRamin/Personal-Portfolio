@@ -106,6 +106,10 @@ export default {
 				'scale-in': {
 					'0%': { opacity: '0', transform: 'scale(0.9)' },
 					'100%': { opacity: '1', transform: 'scale(1)' }
+				},
+				'slideX': {
+					'0%, 100%': { transform: 'translateX(-100%)' },
+					'50%': { transform: 'translateX(100vw)' }
 				}
 			},
 			animation: {
@@ -116,7 +120,9 @@ export default {
 				'glitch': 'glitch 2s infinite',
 				'matrix-fall': 'matrix-fall 3s linear infinite',
 				'fade-in-up': 'fade-in-up 0.8s ease-out forwards',
-				'scale-in': 'scale-in 0.5s ease-out forwards'
+				'scale-in': 'scale-in 0.5s ease-out forwards',
+				'slideX': 'slideX 8s ease-in-out infinite',
+				'spin-slow': 'spin 8s linear infinite'
 			}
 		}
 	},
