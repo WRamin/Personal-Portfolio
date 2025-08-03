@@ -98,6 +98,7 @@ export const Navigation = () => {
           {/* Mobile Menu Button */}
           <motion.button
             whileTap={{ scale: 0.95 }}
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             className="md:hidden p-2 text-foreground"
           >
             <svg
@@ -110,7 +111,7 @@ export const Navigation = () => {
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 strokeWidth={2}
-                d="M4 6h16M4 12h16M4 18h16"
+                d={isMobileMenuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"}
               />
             </svg>
           </motion.button>
