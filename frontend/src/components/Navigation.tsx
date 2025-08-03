@@ -117,7 +117,39 @@ export const Navigation = () => {
             </svg>
           </motion.button>
         </div>
-      </div>
-    </motion.nav>
-  );
+
+        {/* Mobile Menu */}
+        {isMobileMenuOpen && (
+          <motion.div
+          initial={{ opacity: 0, scaleY: 0 }}
+          animate={{ opacity: 1, scaleY: 1 }}
+          transition={{ duration: 0.2 }}
+          className="md:hidden bg-background/95 backdrop-blur-md border-t border-border origin-top"
+        >
+          <div className="px-6 py-4 space-y-4">
+            {navItems.map((item, index) => (
+              <motion.button
+                key={item.label}
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.3, delay: index * 0.1 }}
+                onClick={() => {
+                  scrollToSection(item.href);
+                  setIsMobileMenuOpen(false);
+                }}
+                className={`block w-full text-left px-4 py-3 font-mono text-sm transition-colors duration-300 ${
+                  activeSection === item.href.slice(1)
+                    ? "text-neon-cyan bg-accent/20"
+                    : "text-muted-foreground hover:text-foreground hover:bg-accent/10"
+                } rounded-md`}
+              >
+                {item.label}
+              </motion.button>
+            ))}
+          </div>
+        </motion.div>
+      )}
+    </div>
+  </motion.nav>
+);
 };
