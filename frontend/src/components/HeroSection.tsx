@@ -3,6 +3,7 @@ import { Canvas, useFrame } from "@react-three/fiber";
 import { Float, OrbitControls } from "@react-three/drei";
 import { motion } from "framer-motion";
 import * as THREE from "three";
+import profileCartoon from '@/assets/profile-cartoon-DMBWjdNY.jpg';
 
 const AnimatedCube = () => {
   const meshRef = useRef<THREE.Mesh>(null);
@@ -34,8 +35,8 @@ const ParticleField = () => {
   const pointsRef = useRef<THREE.Points>(null);
   
   const particlesPosition = useMemo(() => {
-    const positions = new Float32Array(500 * 3);
-    for (let i = 0; i < 500; i++) {
+    const positions = new Float32Array(200 * 3); // Reduced from 1000 to 200
+    for (let i = 0; i < 200; i++) {
       positions[i * 3] = (Math.random() - 0.5) * 10;
       positions[i * 3 + 1] = (Math.random() - 0.5) * 10;
       positions[i * 3 + 2] = (Math.random() - 0.5) * 10;
@@ -54,7 +55,7 @@ const ParticleField = () => {
       <bufferGeometry>
         <bufferAttribute
           attach="attributes-position"
-          count={500}
+          count={200}
           array={particlesPosition}
           itemSize={3}
         />
@@ -82,13 +83,36 @@ export const HeroSection = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Check WebGL support
-    const canvas = document.createElement('canvas');
-    const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
-    setWebglSupported(!!gl);
+    // Enhanced WebGL support check
+    const checkWebGL = () => {
+      try {
+        const canvas = document.createElement('canvas');
+        const gl = canvas.getContext('webgl2') || 
+                   canvas.getContext('webgl') || 
+                   canvas.getContext('experimental-webgl');
+        
+        if (!gl) return false;
+        
+        // Cast to WebGLRenderingContext for proper typing
+        const webgl = gl as WebGLRenderingContext;
+        
+        // Additional WebGL capability test
+        const renderer = webgl.getParameter(webgl.RENDERER);
+        const vendor = webgl.getParameter(webgl.VENDOR);
+        
+        console.log('WebGL Details:', { renderer, vendor });
+        return true;
+      } catch (e) {
+        console.warn('WebGL check failed:', e);
+        return false;
+      }
+    };
+    
+    const isSupported = checkWebGL();
+    setWebglSupported(isSupported);
     setIsLoading(false);
     
-    console.log('WebGL supported:', !!gl);
+    console.log('WebGL supported:', isSupported);
   }, []);
 
   const FallbackBackground = () => (
@@ -116,7 +140,7 @@ export const HeroSection = () => {
           />
         ))}
       </div>
-    
+      
       {/* Moving gradient overlay */}
       <div 
         className="absolute inset-0 bg-gradient-to-r from-transparent via-primary/5 to-transparent animate-slideX"
@@ -159,6 +183,19 @@ export const HeroSection = () => {
       {/* Hero Content */}
       <div className="relative z-10 text-center max-w-4xl mx-auto px-6">
         <motion.div
+          initial={{ opacity: 0, scale: 0.5 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8, delay: 0.1 }}
+          className="mb-8"
+        >
+          <img 
+            src={profileCartoon} 
+            alt="Developer Avatar" 
+            className="w-32 h-32 md:w-40 md:h-40 rounded-full mx-auto border-4 border-primary/50 shadow-lg shadow-primary/25 hover:shadow-neon-cyan transition-all duration-300"
+          />
+        </motion.div>
+        
+        <motion.div
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 0.2 }}
@@ -180,7 +217,7 @@ export const HeroSection = () => {
           </p>
           <p className="text-lg text-muted-foreground mb-12 max-w-2xl mx-auto">
             Crafting digital experiences with cutting-edge technology and innovative solutions. 
-            Specializing in modern application development.
+            Specializing in modern web development and system architecture.
           </p>
         </motion.div>
 
@@ -190,20 +227,10 @@ export const HeroSection = () => {
           transition={{ duration: 0.8, delay: 0.8 }}
           className="flex flex-col sm:flex-row gap-4 justify-center"
         >
-          <button 
-          onClick={() => {
-            const contactSection = document.getElementById('projects');
-            contactSection?.scrollIntoView({ behavior: 'smooth' });
-          }} 
-          className="px-8 py-4 bg-gradient-primary text-background font-bold rounded-lg shadow-neon-cyan hover:shadow-neon-purple transition-all duration-300 transform hover:scale-105">
+          <button className="px-8 py-4 bg-gradient-primary text-background font-bold rounded-lg shadow-neon-cyan hover:shadow-neon-purple transition-all duration-300 transform hover:scale-105">
             View Projects
           </button>
-          <button 
-          onClick={() => {
-            const contactSection = document.getElementById('contact');
-            contactSection?.scrollIntoView({ behavior: 'smooth' });
-          }} 
-          className="px-8 py-4 border-2 border-primary text-primary font-bold rounded-lg hover:bg-primary hover:text-background transition-all duration-300 transform hover:scale-105">
+          <button className="px-8 py-4 border-2 border-primary text-primary font-bold rounded-lg hover:bg-primary hover:text-background transition-all duration-300 transform hover:scale-105">
             Contact Me
           </button>
         </motion.div>
