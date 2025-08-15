@@ -1,121 +1,8 @@
-import { useRef, useMemo, Suspense, useState, useEffect } from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
-import { Float, OrbitControls } from "@react-three/drei";
 import { motion } from "framer-motion";
-import * as THREE from "three";
 import profileCartoon from '@/assets/profile-cartoon-DMBWjdNY.jpg';
 
-const AnimatedCube = () => {
-  const meshRef = useRef<THREE.Mesh>(null);
-
-  useFrame((state) => {
-    if (meshRef.current) {
-      meshRef.current.rotation.x = Math.sin(state.clock.elapsedTime) * 0.2;
-      meshRef.current.rotation.y += 0.01;
-      meshRef.current.position.y = Math.sin(state.clock.elapsedTime * 0.5) * 0.2;
-    }
-  });
-
-  return (
-    <Float speed={2} rotationIntensity={1} floatIntensity={2}>
-      <mesh ref={meshRef}>
-        <boxGeometry args={[1, 1, 1]} />
-        <meshStandardMaterial
-          color="#00ffff"
-          emissive="#0088ff"
-          emissiveIntensity={0.2}
-          wireframe={false}
-        />
-      </mesh>
-    </Float>
-  );
-};
-
-const ParticleField = () => {
-  const pointsRef = useRef<THREE.Points>(null);
-  
-  const particlesPosition = useMemo(() => {
-    const positions = new Float32Array(200 * 3); // Reduced from 1000 to 200
-    for (let i = 0; i < 200; i++) {
-      positions[i * 3] = (Math.random() - 0.5) * 10;
-      positions[i * 3 + 1] = (Math.random() - 0.5) * 10;
-      positions[i * 3 + 2] = (Math.random() - 0.5) * 10;
-    }
-    return positions;
-  }, []);
-
-  useFrame(() => {
-    if (pointsRef.current) {
-      pointsRef.current.rotation.y += 0.001;
-    }
-  });
-
-  return (
-    <points ref={pointsRef}>
-      <bufferGeometry>
-        <bufferAttribute
-          attach="attributes-position"
-          count={200}
-          array={particlesPosition}
-          itemSize={3}
-        />
-      </bufferGeometry>
-      <pointsMaterial color="#00ffff" size={0.02} />
-    </points>
-  );
-};
-
-const Scene3D = () => {
-  return (
-    <Canvas camera={{ position: [0, 0, 5], fov: 75 }}>
-      <ambientLight intensity={0.5} />
-      <pointLight position={[10, 10, 10]} color="#00ffff" intensity={1} />
-      <pointLight position={[-10, -10, -10]} color="#ff00ff" intensity={0.5} />
-      <AnimatedCube />
-      <ParticleField />
-      <OrbitControls enableZoom={false} enablePan={false} autoRotate autoRotateSpeed={0.5} />
-    </Canvas>
-  );
-};
-
 export const HeroSection = () => {
-  const [webglSupported, setWebglSupported] = useState(true);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    // Enhanced WebGL support check
-    const checkWebGL = () => {
-      try {
-        const canvas = document.createElement('canvas');
-        const gl = canvas.getContext('webgl2') || 
-                   canvas.getContext('webgl') || 
-                   canvas.getContext('experimental-webgl');
-        
-        if (!gl) return false;
-        
-        // Cast to WebGLRenderingContext for proper typing
-        const webgl = gl as WebGLRenderingContext;
-        
-        // Additional WebGL capability test
-        const renderer = webgl.getParameter(webgl.RENDERER);
-        const vendor = webgl.getParameter(webgl.VENDOR);
-        
-        console.log('WebGL Details:', { renderer, vendor });
-        return true;
-      } catch (e) {
-        console.warn('WebGL check failed:', e);
-        return false;
-      }
-    };
-    
-    const isSupported = checkWebGL();
-    setWebglSupported(isSupported);
-    setIsLoading(false);
-    
-    console.log('WebGL supported:', isSupported);
-  }, []);
-
-  const FallbackBackground = () => (
+  const Background = () => (
     <div className="absolute inset-0 z-0">
       {/* Enhanced CSS-only animated background */}
       <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-accent/10 to-secondary/20"></div>
@@ -150,18 +37,8 @@ export const HeroSection = () => {
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Background with WebGL fallback */}
-      {!isLoading && (
-        webglSupported ? (
-          <div className="absolute inset-0 z-0">
-            <Suspense fallback={<FallbackBackground />}>
-              <Scene3D />
-            </Suspense>
-          </div>
-        ) : (
-          <FallbackBackground />
-        )
-      )}
+      {/* 2D Background */}
+      <Background />
 
       {/* Simplified Matrix Rain Effect */}
       <div className="matrix-rain absolute inset-0 z-1">
@@ -201,7 +78,7 @@ export const HeroSection = () => {
           transition={{ duration: 1, delay: 0.2 }}
         >
           <h1 className="text-6xl md:text-8xl font-bold mb-6 glitch-text">
-            <span className="bg-gradient-primary bg-clip-text ">
+            <span className="bg-gradient-primary bg-clip-text">
               Ramin Wafa
             </span>
           </h1>
@@ -227,10 +104,20 @@ export const HeroSection = () => {
           transition={{ duration: 0.8, delay: 0.8 }}
           className="flex flex-col sm:flex-row gap-4 justify-center"
         >
-          <button className="px-8 py-4 bg-gradient-primary text-background font-bold rounded-lg shadow-neon-cyan hover:shadow-neon-purple transition-all duration-300 transform hover:scale-105">
+          <button 
+            onClick={() => {
+              const contactSection = document.getElementById('projects');
+              contactSection?.scrollIntoView({ behavior: 'smooth' });
+            }}
+            className="px-8 py-4 bg-gradient-primary text-background font-bold rounded-lg shadow-neon-cyan hover:shadow-neon-purple transition-all duration-300 transform hover:scale-105">
             View Projects
           </button>
-          <button className="px-8 py-4 border-2 border-primary text-primary font-bold rounded-lg hover:bg-primary hover:text-background transition-all duration-300 transform hover:scale-105">
+          <button 
+            onClick={() => {
+              const contactSection = document.getElementById('contact');
+              contactSection?.scrollIntoView({ behavior: 'smooth' });
+            }}
+            className="px-8 py-4 border-2 border-primary text-primary font-bold rounded-lg hover:bg-primary hover:text-background transition-all duration-300 transform hover:scale-105">
             Contact Me
           </button>
         </motion.div>
