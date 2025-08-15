@@ -131,7 +131,7 @@ export const HeroSection = () => {
         className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
       >
         <div className="text-center">
-          <p className="text-sm text-muted-foreground m-2 font-mono">&gt; scroll_down</p>
+          <p className="text-sm text-muted-foreground mb-2 font-mono">&gt; scroll_down</p>
           <div className="w-6 h-10 border-2 border-primary rounded-full mx-auto relative">
             <div className="w-1 h-3 bg-primary rounded-full mx-auto mt-2 animate-bounce"></div>
           </div>
